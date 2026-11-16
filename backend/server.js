@@ -89,9 +89,11 @@ app.get('/', (req, res) => {
   });
 });
 
-// Routes
+// Routes (mounted with /api and fallback root for maximum client compatibility)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/products', productRoutes);
 
 // Error Middlewares
 app.use(notFound);
