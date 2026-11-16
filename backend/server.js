@@ -20,12 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 // Enable ETag HTTP caching
 app.set('etag', 'strong');
 
-// Request timing header
+// Lightweight request timing logger
 app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
     const duration = Date.now() - start;
-    res.setHeader('X-Response-Time', `${duration}ms`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[${req.method}] ${req.originalUrl} ${res.statusCode} - ${duration}ms`);
+    }
   });
   next();
 });
