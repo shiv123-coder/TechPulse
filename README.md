@@ -3,7 +3,7 @@
 > **Pluto Academy MERN Stack Internship — Project 02**  
 > Built by **Shivshankar Dhareppa Mali**  
 > Candidate Offer Reference: `PA-OL-MS-2026-0237`  
-> GitHub Repository: [https://github.com/shiv123-coder/pluto-ecommerce-mern](https://github.com/shiv123-coder/pluto-ecommerce-mern)
+> GitHub Repository: [https://github.com/shiv123-coder/TechPulse](https://github.com/shiv123-coder/TechPulse)
 
 TechPulse is an e-commerce platform built on the **MERN** stack (MongoDB, Express.js, React.js, Node.js). It features a catalog with dynamic multi-parameter filtering, real-time keyword search, interactive shopping cart with state persistence, role-based authorization, and an Admin Management Console for real-time inventory control.
 
