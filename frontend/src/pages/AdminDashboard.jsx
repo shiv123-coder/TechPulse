@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import AdminProductModal from '../components/AdminProductModal';
 import api from '../services/api';
+import { useToast } from '../context/ToastContext';
 import {
   Plus,
   Search,
@@ -25,6 +26,8 @@ const AdminDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
 
+  const { showToast } = useToast();
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -35,7 +38,7 @@ const AdminDashboard = () => {
       }
     } catch (err) {
       console.error('Admin fetch error:', err);
-      setError('Failed to fetch inventory.');
+      showToast('Failed to fetch inventory from server', 'error');
     } finally {
       setLoading(false);
     }
@@ -53,12 +56,14 @@ const AdminDashboard = () => {
         setProducts((prev) =>
           prev.map((p) => (p._id === productToEdit._id ? res.data.data : p))
         );
+        showToast('Product updated successfully', 'success');
       }
     } else {
       // Create
       const res = await api.post('/products', formData);
       if (res.data.success) {
         setProducts((prev) => [res.data.data, ...prev]);
+        showToast('New product created successfully', 'success');
       }
     }
   };
@@ -66,10 +71,12 @@ const AdminDashboard = () => {
   const handleDeleteProduct = async (id) => {
     if (window.confirm('Are you sure you want to permanently delete this product?')) {
       setProducts((prev) => prev.filter((p) => p._id !== id));
+      showToast('Product deleted from inventory', 'info');
       try {
         await api.delete(`/products/${id}`);
       } catch (err) {
         console.error('Failed to delete product:', err);
+        showToast('Failed to delete product on server', 'error');
         fetchProducts();
       }
     }
@@ -306,4 +313,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

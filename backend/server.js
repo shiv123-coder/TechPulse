@@ -5,8 +5,6 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
-const Product = require('./models/Product');
-const User = require('./models/User');
 
 dotenv.config();
 
@@ -18,6 +16,19 @@ const app = express();
 // Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Enable ETag HTTP caching
+app.set('etag', 'strong');
+
+// Request timing header
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    res.setHeader('X-Response-Time', `${duration}ms`);
+  });
+  next();
+});
 
 // CORS
 const allowedOrigins = [
@@ -42,20 +53,21 @@ app.use(
   })
 );
 
-// Health check
+// Health check (Fast 200 for Render / Uptime monitors)
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
-    message: 'E-Commerce API is healthy and operational',
+    service: 'TechPulse Store API',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: Math.round(process.uptime()),
+    memoryUsage: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + ' MB'
   });
 });
 
 // Root
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'Welcome to Pluto Academy MERN Internship - Project 02 E-Commerce API',
+    message: 'Welcome to TechPulse E-Commerce API | Pluto Academy Capstone',
     endpoints: {
       health: '/api/health',
       auth: {
@@ -86,8 +98,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5001;
 
 const server = app.listen(PORT, () => {
-  console.log(`[Server] E-Commerce API running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+  console.log(`[Server] TechPulse API running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });
 
-module.exports = app;
-
+module.exports = server;

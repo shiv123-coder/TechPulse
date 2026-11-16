@@ -3,19 +3,19 @@ import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
 import CartDrawer from '../components/CartDrawer';
 import api from '../services/api';
+import { useToast } from '../context/ToastContext';
 import {
   Search,
   SlidersHorizontal,
   RotateCcw,
   Sparkles,
-  Zap,
-  TrendingUp
+  Server
 } from 'lucide-react';
 
 const Catalog = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [coldStartNotice, setColdStartNotice] = useState(false);
 
   // Filter States
   const [search, setSearch] = useState('');
@@ -23,17 +23,26 @@ const Catalog = () => {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sortBy, setSortBy] = useState('featured');
 
+  const { showToast } = useToast();
+
   const fetchProducts = async () => {
+    const timer = setTimeout(() => {
+      setColdStartNotice(true);
+    }, 2200);
+
     try {
       setLoading(true);
-      setError('');
       const res = await api.get('/products');
+      clearTimeout(timer);
+      setColdStartNotice(false);
       if (res.data.success) {
         setProducts(res.data.data);
       }
     } catch (err) {
+      clearTimeout(timer);
+      setColdStartNotice(false);
       console.error('Error fetching catalog:', err);
-      setError('Failed to load products. Make sure the backend server is running.');
+      showToast('Failed to load catalog from server', 'error');
     } finally {
       setLoading(false);
     }
@@ -80,6 +89,7 @@ const Catalog = () => {
     setSelectedCategory('all');
     setMaxPrice(1000);
     setSortBy('featured');
+    showToast('Filters reset to default', 'info');
   };
 
   return (
@@ -88,6 +98,23 @@ const Catalog = () => {
       <CartDrawer />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Render Free Tier Cold-Start Banner */}
+        {coldStartNotice && (
+          <div className="mb-6 p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/80 flex items-center justify-between gap-3 shadow-sm animate-pulse">
+            <div className="flex items-center gap-3 text-indigo-900 text-xs sm:text-sm font-medium">
+              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0">
+                <Server className="w-4 h-4 animate-spin" />
+              </div>
+              <div>
+                <p className="font-bold">Connecting to Cloud Backend...</p>
+                <p className="text-indigo-700/80 text-xs">
+                  Render free tier instances sleep after inactivity. Please allow 30–45s for the initial wake-up.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Hero Banner */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-8 sm:p-12 text-white shadow-xl mb-10">
           <div className="relative z-10 max-w-2xl">
@@ -195,20 +222,20 @@ const Catalog = () => {
           </span>
         </div>
 
-        {/* Product Grid */}
+        {/* Product Grid with Enhanced Shimmer Skeletons */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden animate-pulse"
+                className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm animate-pulse"
               >
-                <div className="aspect-square bg-slate-200"></div>
+                <div className="aspect-square bg-slate-200/80"></div>
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                  <div className="h-3 bg-slate-100 rounded w-1/2"></div>
-                  <div className="pt-3 flex justify-between items-center">
-                    <div className="h-5 bg-slate-200 rounded w-16"></div>
+                  <div className="h-4 bg-slate-200 rounded-md w-3/4"></div>
+                  <div className="h-3 bg-slate-100 rounded-md w-1/2"></div>
+                  <div className="pt-3 border-t border-slate-100 flex justify-between items-center">
+                    <div className="h-5 bg-slate-200 rounded-md w-16"></div>
                     <div className="h-8 bg-slate-200 rounded-xl w-24"></div>
                   </div>
                 </div>
@@ -245,4 +272,3 @@ const Catalog = () => {
 };
 
 export default Catalog;
-

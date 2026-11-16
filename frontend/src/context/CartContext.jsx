@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from './ToastContext';
 
 const CartContext = createContext();
 
@@ -12,21 +13,33 @@ export const CartProvider = ({ children }) => {
     }
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     localStorage.setItem('ecommerce_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product, qty = 1) => {
+    if (product.stockCount <= 0) {
+      showToast('This product is currently out of stock', 'error');
+      return;
+    }
+
     setCartItems((prevItems) => {
       const existing = prevItems.find((item) => item.product._id === product._id);
       if (existing) {
+        if (existing.qty >= product.stockCount) {
+          showToast(`Maximum available stock (${product.stockCount}) reached`, 'error');
+          return prevItems;
+        }
+        showToast(`Updated ${product.name} quantity in cart`, 'success');
         return prevItems.map((item) =>
           item.product._id === product._id
             ? { ...item, qty: Math.min(item.qty + qty, product.stockCount) }
             : item
         );
       }
+      showToast(`Added ${product.name} to cart`, 'success');
       return [...prevItems, { product, qty: Math.min(qty, product.stockCount) }];
     });
     setIsCartOpen(true);
@@ -34,6 +47,7 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = (productId) => {
     setCartItems((prev) => prev.filter((item) => item.product._id !== productId));
+    showToast('Item removed from cart', 'info');
   };
 
   const updateQuantity = (productId, qty) => {
@@ -45,7 +59,11 @@ export const CartProvider = ({ children }) => {
       prev.map((item) => {
         if (item.product._id === productId) {
           const maxStock = item.product.stockCount || 99;
-          return { ...item, qty: Math.min(qty, maxStock) };
+          if (qty > maxStock) {
+            showToast(`Only ${maxStock} units available in stock`, 'error');
+            return item;
+          }
+          return { ...item, qty };
         }
         return item;
       })
@@ -85,4 +103,3 @@ export const useCart = () => {
   }
   return context;
 };
-

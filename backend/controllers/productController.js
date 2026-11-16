@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const { invalidateCache } = require('../middleware/cacheMiddleware');
 
 // @desc    Fetch all products with keyword search, category filter, price filtering & sorting
 // @route   GET /api/products
@@ -117,6 +118,7 @@ const createProduct = async (req, res, next) => {
       featured: Boolean(featured)
     });
 
+    invalidateCache();
     res.status(201).json({
       success: true,
       data: product,
@@ -153,6 +155,7 @@ const updateProduct = async (req, res, next) => {
 
     const updatedProduct = await product.save();
 
+    invalidateCache();
     res.status(200).json({
       success: true,
       data: updatedProduct,
@@ -178,6 +181,8 @@ const deleteProduct = async (req, res, next) => {
     }
 
     await product.deleteOne();
+
+    invalidateCache();
 
     res.status(200).json({
       success: true,

@@ -9,12 +9,13 @@ const {
   deleteProduct
 } = require('../controllers/productController');
 const { protect, admin } = require('../middleware/authMiddleware');
+const { cacheMiddleware } = require('../middleware/cacheMiddleware');
 
 router.route('/')
-  .get(getProducts)
+  .get(cacheMiddleware, getProducts)
   .post(protect, admin, createProduct);
 
-router.get('/categories', getCategories);
+router.get('/categories', cacheMiddleware, getCategories);
 
 router.route('/:id')
   .get(getProductById)
@@ -22,4 +23,3 @@ router.route('/:id')
   .delete(protect, admin, deleteProduct);
 
 module.exports = router;
-
