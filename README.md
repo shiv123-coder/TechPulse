@@ -2,39 +2,39 @@
 
 > **Pluto Academy MERN Stack Internship — Project 02**  
 > Built by **Shivshankar Dhareppa Mali**  
-> Candidate Offer Reference: `PA-OL-MS-2026-0237`
+> Candidate Offer Reference: `PA-OL-MS-2026-0237`  
+> GitHub Repository: [https://github.com/shiv123-coder/pluto-ecommerce-mern](https://github.com/shiv123-coder/pluto-ecommerce-mern)
 
 TechPulse is an e-commerce platform built on the **MERN** stack (MongoDB, Express.js, React.js, Node.js). It features a catalog with dynamic multi-parameter filtering, real-time keyword search, interactive shopping cart with state persistence, role-based authorization, and an Admin Management Console for real-time inventory control.
 
 ---
 
-## 🌟 Key Features
+## 📚 Core Concepts & Topics Covered
 
-- **🔎 Real-Time Product Catalog & Filtering:**
-  - Instant client-side & server-side search across product names, categories, and descriptions.
-  - Category filtering tabs (*Audio*, *Wearables*, *Accessories*, *Computers*, *Photography*, etc.).
-  - Interactive price range slider filter.
-  - Multi-criteria sorting (*Featured First*, *Price: Low to High*, *Price: High to Low*, *Customer Rating*, *Newest Arrivals*).
-  - Responsive empty states and 1-click filter reset.
+### 1. Role-Based Access Control (RBAC) & Security
+- **Dual-Tier Authentication:** Distinguishing standard customers (`role: 'user'`) from administrators (`role: 'admin'`).
+- **Hierarchical Middleware:** Chained Express guards (`protect` for JWT verification, followed by `admin` for role authorization).
+- **Frontend Route Protection:** Client-side `AdminRoute` blocking unauthorized access with user-friendly access-denied prompts.
+- **Bcrypt Security:** Salted hashing for passwords and secure token issuance.
 
-- **🛒 Interactive Shopping Cart:**
-  - Slide-over Cart Drawer accessible from anywhere in the application.
-  - Real-time quantity adjustments with stock-boundary checking (prevents ordering beyond available stock).
-  - Item removal and clear-cart operations.
-  - Live subtotal and order breakdown calculation.
-  - Simulated checkout workflow with animated confirmation screen.
-  - Persistent cart state saved across browser sessions via `localStorage`.
+### 2. Advanced NoSQL Data Modeling & Database Seeding
+- **MongoDB Atlas Schemas:** Product schema with name, description, price, category, imageUrl, stockCount, ratings, and featured status.
+- **Compound Text Indexing:** Database-level `$text` index across `name` and `description` for high-performance search.
+- **Automated Cloud Seeder (`seeder.js`):** Standalone data seeder to wipe and populate 10+ realistic catalog items with CDN assets and pre-configured administrator accounts.
 
-- **🛡️ Role-Based Access Control (RBAC):**
-  - Distinguishes standard customers (`role: 'user'`) from administrators (`role: 'admin'`).
-  - Protected backend routes with `protect` and `admin` middleware.
-  - Frontend route guards (`AdminRoute`) restricting the admin dashboard to authenticated administrators.
+### 3. E-Commerce State Management & Shopping Cart
+- **Persistent Cart Context (`CartContext`):** React Context managing cart state with automatic bidirectional synchronization to `localStorage`.
+- **Inventory Boundary Enforcement:** Quantity increment logic strictly bounded by actual product `stockCount` to prevent overselling.
+- **Dynamic Price Breakdown:** Live subtotal, free shipping calculations, and checkout simulation with confirmation feedback.
 
-- **⚙️ Protected Admin Console:**
-  - Real-time catalog metrics: Total Products, Total Stock Units, Low Stock Alert Count, and Catalog Valuation ($).
-  - Searchable inventory table with thumbnail previews, stock indicators, and pricing.
-  - Full CRUD operations: Create new products, update existing specifications, and delete obsolete inventory.
-  - Pre-seeded with 10 high-quality products across tech and lifestyle categories.
+### 4. Interactive Catalog & Multi-Parameter Filtering
+- **Multi-Factor Filtering:** Live client-side & server-side search across keyword, category tags, and dynamic price range slider.
+- **Flexible Sorting:** Sorting algorithms for *Featured*, *Price: Low to High*, *Price: High to Low*, *Rating*, and *Newest Arrivals*.
+- **Instant Reset:** 1-click filter reset returning to the full catalog view.
+
+### 5. Admin Inventory Management Console
+- **Real-Time Catalog Metrics:** Automated calculation of Total Products, Total Stock Units, Low Stock Alert Count (<= 5 units), and Catalog Valuation ($).
+- **Full Inventory CRUD:** Modal dialogs for adding new products, updating specifications/stock, and permanently deleting products.
 
 ---
 
@@ -55,7 +55,7 @@ Evaluators can test the application using pre-configured accounts or the 1-click
 | :--- | :--- |
 | **Frontend** | React 19 (Vite), React Router DOM v7, Axios, Tailwind CSS v4, Lucide React |
 | **Backend** | Node.js, Express.js, Mongoose ODM, JSON Web Token (JWT), Bcryptjs, CORS, Dotenv |
-| **Database** | MongoDB Atlas / Local MongoDB (9.0.4) |
+| **Database** | MongoDB Atlas Cloud Cluster |
 | **Deployment** | Vercel (Frontend SPA), Render (Backend REST API) |
 
 ---
@@ -66,7 +66,7 @@ Evaluators can test the application using pre-configured accounts or the 1-click
 project-02-ecommerce-app/
 ├── backend/
 │   ├── config/
-│   │   └── db.js                 # MongoDB connection logic
+│   │   └── db.js                 # MongoDB Atlas connection logic
 │   ├── controllers/
 │   │   ├── authController.js     # User registration, login, profile & RBAC
 │   │   └── productController.js  # Product queries, filters, and Admin CRUD
@@ -101,12 +101,12 @@ project-02-ecommerce-app/
     │   │   ├── Login.jsx             # Sign in with 1-click demo accounts
     │   │   └── Register.jsx          # Customer registration
     │   ├── services/
-    │   │   └── api.js                # Axios client with interceptors
-    │   ├── App.jsx                   # Application routes
-    │   ├── main.jsx                  # React DOM mount
-    │   └── index.css                 # Tailwind CSS styles
+    │   └── api.js                # Axios client with interceptors
+    ├── App.jsx                   # Application routes
+    ├── main.jsx                  # React DOM mount
+    └── index.css                 # Tailwind CSS styles
     ├── index.html
-    ├── vercel.json                   # Vercel SPA routing
+    ├── vercel.json               # Vercel SPA routing
     └── package.json
 ```
 
@@ -139,30 +139,18 @@ project-02-ecommerce-app/
 ```bash
 cd backend
 npm install
-
-# Create environment configuration
 cp .env.example .env
-
-# Seed initial products and admin account
 npm run seed
-
-# Run backend development server
 npm run dev
 ```
-*Backend runs on `http://localhost:5001`.*
 
 ### 2. Frontend Setup
 ```bash
 cd ../frontend
 npm install
-
-# Create environment configuration
 cp .env.example .env
-
-# Run Vite frontend server
 npm run dev
 ```
-*Frontend runs on `http://localhost:5174`.*
 
 ---
 
@@ -170,4 +158,3 @@ npm run dev
 
 > **Most Interesting Feature Built:**  
 > Implementing the dual-tier role-based authorization system combining secure Express middleware (`protect` + `admin`) with a synchronized client-side cart and real-time Admin Management Console that enables immediate catalog updates, live stock monitoring, and out-of-stock validation without requiring page reloads.
-
