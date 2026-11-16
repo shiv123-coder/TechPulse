@@ -1,9 +1,6 @@
 const Product = require('../models/Product');
 const { invalidateCache } = require('../middleware/cacheMiddleware');
 
-// @desc    Fetch all products with keyword search, category filter, price filtering & sorting
-// @route   GET /api/products
-// @access  Public
 const getProducts = async (req, res, next) => {
   try {
     const { keyword, category, minPrice, maxPrice, sort } = req.query;
@@ -56,9 +53,6 @@ const getProducts = async (req, res, next) => {
   }
 };
 
-// @desc    Fetch single product by ID
-// @route   GET /api/products/:id
-// @access  Public
 const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -79,9 +73,6 @@ const getProductById = async (req, res, next) => {
   }
 };
 
-// @desc    Get all distinct product categories
-// @route   GET /api/products/categories
-// @access  Public
 const getCategories = async (req, res, next) => {
   try {
     const categories = await Product.distinct('category');
@@ -94,9 +85,6 @@ const getCategories = async (req, res, next) => {
   }
 };
 
-// @desc    Create a product
-// @route   POST /api/products
-// @access  Private/Admin
 const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, category, imageUrl, stockCount, featured } = req.body;
@@ -129,9 +117,6 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Update a product
-// @route   PUT /api/products/:id
-// @access  Private/Admin
 const updateProduct = async (req, res, next) => {
   try {
     let product = await Product.findById(req.params.id);
@@ -166,9 +151,6 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Private/Admin
 const deleteProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);

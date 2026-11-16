@@ -67,7 +67,7 @@ app.get('/api/health', (req, res) => {
 // Root
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'Welcome to TechPulse E-Commerce API | Pluto Academy Capstone',
+    message: 'TechPulse E-Commerce API is running',
     endpoints: {
       health: '/api/health',
       auth: {

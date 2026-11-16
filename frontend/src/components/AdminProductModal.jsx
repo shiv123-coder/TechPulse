@@ -67,31 +67,31 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-100">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-          <h2 className="text-xl font-bold text-slate-800">
-            {productToEdit ? 'Edit Product' : 'Add New Product'}
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-xl max-w-lg w-full p-5 shadow-xl border border-slate-200">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <h2 className="text-base font-semibold text-slate-900">
+            {productToEdit ? 'Edit product' : 'Add product'}
           </h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-center gap-2">
+          <div className="mt-3 p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-3 space-y-3">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Product Title <span className="text-rose-500">*</span>
+            <label className="block text-xs font-medium text-slate-700 mb-1">
+              Product title <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -99,19 +99,19 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
               placeholder="e.g. Sony WH-1000XM5"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+              className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Category
               </label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 bg-white"
+                className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 bg-white"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>{c}</option>
@@ -120,7 +120,7 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Price ($) <span className="text-rose-500">*</span>
               </label>
               <input
@@ -131,13 +131,13 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
                 placeholder="299.99"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+                className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Stock Count
+              <label className="block text-xs font-medium text-slate-700 mb-1">
+                Stock count
               </label>
               <input
                 type="number"
@@ -146,13 +146,13 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
                 placeholder="10"
                 value={formData.stockCount}
                 onChange={(e) => setFormData({ ...formData, stockCount: e.target.value })}
-                className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+                className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-medium text-slate-700 mb-1">
               Image URL <span className="text-rose-500">*</span>
             </label>
             <input
@@ -161,32 +161,32 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
               placeholder="https://images.unsplash.com/..."
               value={formData.imageUrl}
               onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+              className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
             />
           </div>
 
           {formData.imageUrl && (
-            <div className="flex items-center gap-3 p-2 bg-slate-50 border border-slate-200 rounded-lg">
+            <div className="flex items-center gap-2.5 p-2 bg-slate-50 border border-slate-200 rounded-lg">
               <img
                 src={formData.imageUrl}
                 alt="Preview"
-                className="w-12 h-12 rounded object-cover bg-white"
+                className="w-10 h-10 rounded object-cover bg-white"
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
-              <span className="text-xs text-slate-500">Image Preview</span>
+              <span className="text-xs text-slate-500">Image preview</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-medium text-slate-700 mb-1">
               Description
             </label>
             <textarea
-              rows="3"
+              rows="2"
               placeholder="Write detailed specifications and features..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 resize-none"
+              className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 resize-none"
             ></textarea>
           </div>
 
@@ -196,27 +196,27 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
               id="featured"
               checked={formData.featured}
               onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-              className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+              className="w-3.5 h-3.5 accent-slate-900 rounded cursor-pointer"
             />
-            <label htmlFor="featured" className="text-xs font-medium text-slate-700 cursor-pointer">
-              Mark as Featured Product (Highlights in top banner)
+            <label htmlFor="featured" className="text-xs text-slate-700 cursor-pointer">
+              Mark as featured product
             </label>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm shadow-indigo-200 transition-colors disabled:opacity-50 cursor-pointer"
+              className="px-4 py-1.5 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
             >
-              {isSubmitting ? 'Saving...' : productToEdit ? 'Save Changes' : 'Create Product'}
+              {isSubmitting ? 'Saving...' : productToEdit ? 'Save changes' : 'Create product'}
             </button>
           </div>
         </form>

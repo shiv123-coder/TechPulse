@@ -35,3 +35,4 @@ const invalidateCache = () => {
 };
 
 module.exports = { cacheMiddleware, invalidateCache };
+

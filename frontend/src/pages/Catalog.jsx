@@ -8,7 +8,6 @@ import {
   Search,
   SlidersHorizontal,
   RotateCcw,
-  Sparkles,
   Server
 } from 'lucide-react';
 
@@ -100,14 +99,14 @@ const Catalog = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Render Free Tier Cold-Start Banner */}
         {coldStartNotice && (
-          <div className="mb-6 p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/80 flex items-center justify-between gap-3 shadow-sm animate-pulse">
-            <div className="flex items-center gap-3 text-indigo-900 text-xs sm:text-sm font-medium">
-              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center flex-shrink-0">
-                <Server className="w-4 h-4 animate-spin" />
+          <div className="mb-6 p-3.5 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-center gap-3 text-amber-900 text-xs font-medium">
+              <div className="w-7 h-7 rounded-md bg-amber-200 text-amber-900 flex items-center justify-center flex-shrink-0">
+                <Server className="w-3.5 h-3.5" />
               </div>
               <div>
-                <p className="font-bold">Connecting to Cloud Backend...</p>
-                <p className="text-indigo-700/80 text-xs">
+                <p className="font-semibold">Connecting to cloud backend</p>
+                <p className="text-amber-800 text-[11px]">
                   Render free tier instances sleep after inactivity. Please allow 30–45s for the initial wake-up.
                 </p>
               </div>
@@ -115,43 +114,40 @@ const Catalog = () => {
           </div>
         )}
 
-        {/* Hero Banner */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-8 sm:p-12 text-white shadow-xl mb-10">
-          <div className="relative z-10 max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-indigo-300 bg-indigo-900/60 border border-indigo-700/60 rounded-full mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              Internship Showcase Edition
+        {/* Hero Section */}
+        <div className="rounded-xl bg-slate-900 p-6 sm:p-8 text-white mb-6">
+          <div className="max-w-2xl">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
+              TechPulse Store
             </span>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              Premium Hardware & Daily Essentials
+            <h1 className="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight leading-tight">
+              Hardware and productivity equipment
             </h1>
-            <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-              Curated audio equipment, wearable technology, ergonomics, and productivity gear powered by a full-stack MERN architecture.
+            <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Curated gear with real-time inventory management, responsive search, and full-stack MERN checkout workflows.
             </p>
           </div>
-          {/* Subtle decorative glow */}
-          <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"></div>
         </div>
 
         {/* Filter and Search Controls */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm mb-8 space-y-4">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6 space-y-3">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search products by brand, title, or keywords..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all"
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-colors"
               />
             </div>
 
             {/* Price Slider */}
-            <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200/70">
-              <span className="text-xs font-semibold text-slate-600 whitespace-nowrap">
-                Max Price:
+            <div className="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+              <span className="text-xs font-medium text-slate-600 whitespace-nowrap">
+                Max price:
               </span>
               <input
                 type="range"
@@ -160,9 +156,9 @@ const Catalog = () => {
                 step="25"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-28 sm:w-36 accent-indigo-600 cursor-pointer"
+                className="w-28 sm:w-36 accent-slate-900 cursor-pointer"
               />
-              <span className="text-xs font-bold text-indigo-700 min-w-[50px]">
+              <span className="text-xs font-semibold text-slate-900 min-w-[45px]">
                 ${maxPrice}
               </span>
             </div>
@@ -172,91 +168,91 @@ const Catalog = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3.5 py-2.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+                className="px-3 py-2 text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 cursor-pointer"
               >
-                <option value="featured">Featured First</option>
-                <option value="price_asc">Price: Low to High</option>
-                <option value="price_desc">Price: High to Low</option>
-                <option value="rating">Customer Rating</option>
-                <option value="newest">Newest Arrivals</option>
+                <option value="featured">Featured first</option>
+                <option value="price_asc">Price: low to high</option>
+                <option value="price_desc">Price: high to low</option>
+                <option value="rating">Customer rating</option>
+                <option value="newest">Newest arrivals</option>
               </select>
 
               {(search || selectedCategory !== 'all' || maxPrice < 1000 || sortBy !== 'featured') && (
                 <button
                   onClick={handleResetFilters}
-                  className="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
-                  title="Reset Filters"
+                  className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                  title="Reset filters"
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <RotateCcw className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
           </div>
 
           {/* Category Tabs */}
-          <div className="flex items-center gap-2 pt-3 border-t border-slate-100 overflow-x-auto text-xs font-medium">
-            <span className="text-slate-400 text-[11px] font-bold uppercase tracking-wider mr-1 hidden sm:inline">
-              Categories:
+          <div className="flex items-center gap-1.5 pt-3 border-t border-slate-100 overflow-x-auto text-xs">
+            <span className="text-slate-400 text-[11px] font-medium mr-1 hidden sm:inline">
+              Category:
             </span>
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-lg capitalize whitespace-nowrap transition-colors cursor-pointer ${
+                className={`px-3 py-1 rounded-md capitalize whitespace-nowrap transition-colors cursor-pointer text-xs ${
                   selectedCategory.toLowerCase() === cat.toLowerCase()
-                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
+                    ? 'bg-slate-900 text-white font-medium'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                {cat === 'all' ? 'All Products' : cat}
+                {cat === 'all' ? 'All products' : cat}
               </button>
             ))}
           </div>
         </div>
 
         {/* Results Counter */}
-        <div className="flex items-center justify-between mb-6 text-xs text-slate-500 font-medium">
+        <div className="flex items-center justify-between mb-4 text-xs text-slate-500 font-medium">
           <span>
-            Showing <strong className="text-slate-800">{filteredProducts.length}</strong> of{' '}
+            Showing <strong className="text-slate-900">{filteredProducts.length}</strong> of{' '}
             {products.length} products
           </span>
         </div>
 
-        {/* Product Grid with Enhanced Shimmer Skeletons */}
+        {/* Product Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm animate-pulse"
+                className="bg-white rounded-xl border border-slate-200 overflow-hidden"
               >
-                <div className="aspect-square bg-slate-200/80"></div>
-                <div className="p-5 space-y-3">
-                  <div className="h-4 bg-slate-200 rounded-md w-3/4"></div>
-                  <div className="h-3 bg-slate-100 rounded-md w-1/2"></div>
-                  <div className="pt-3 border-t border-slate-100 flex justify-between items-center">
-                    <div className="h-5 bg-slate-200 rounded-md w-16"></div>
-                    <div className="h-8 bg-slate-200 rounded-xl w-24"></div>
+                <div className="aspect-square bg-slate-100 animate-pulse"></div>
+                <div className="p-4 space-y-2">
+                  <div className="h-3.5 bg-slate-200 rounded w-3/4 animate-pulse"></div>
+                  <div className="h-3 bg-slate-100 rounded w-1/2 animate-pulse"></div>
+                  <div className="pt-2 border-t border-slate-100 flex justify-between items-center">
+                    <div className="h-4 bg-slate-200 rounded w-14 animate-pulse"></div>
+                    <div className="h-7 bg-slate-200 rounded-lg w-20 animate-pulse"></div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center max-w-md mx-auto my-8">
-            <div className="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <SlidersHorizontal className="w-7 h-7" />
+          <div className="bg-white rounded-xl border border-slate-200 p-10 text-center max-w-md mx-auto my-6">
+            <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <SlidersHorizontal className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-slate-800">No matching products found</h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <h3 className="text-sm font-semibold text-slate-900">No matching products found</h3>
+            <p className="mt-1 text-xs text-slate-500">
               Try modifying your search keywords or resetting price and category filters.
             </p>
             <button
               onClick={handleResetFilters}
-              className="mt-5 inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md shadow-indigo-200 transition-colors cursor-pointer"
+              className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              Reset Filters
+              Reset filters
             </button>
           </div>
         ) : (
