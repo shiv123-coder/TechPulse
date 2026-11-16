@@ -170,3 +170,4 @@ npm run dev
 
 > **Most Interesting Feature Built:**  
 > Implementing the dual-tier role-based authorization system combining secure Express middleware (`protect` + `admin`) with a synchronized client-side cart and real-time Admin Management Console that enables immediate catalog updates, live stock monitoring, and out-of-stock validation without requiring page reloads.
+

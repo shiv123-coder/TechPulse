@@ -197,3 +197,4 @@ module.exports = {
   updateProduct,
   deleteProduct
 };
+

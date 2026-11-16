@@ -226,3 +226,4 @@ const AdminProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
 };
 
 export default AdminProductModal;
+

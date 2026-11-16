@@ -158,3 +158,4 @@ const seedData = async () => {
 };
 
 seedData();
+
